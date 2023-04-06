@@ -1,0 +1,188 @@
+# dependences
+from flask import Flask, render_template, request, jsonify
+import sqlite3
+import os
+
+
+# this has the web server + everything
+app = Flask(__name__)
+
+# adding db information
+#####
+#####
+
+#create database
+conn = sqlite3.connect('database.sqlite')
+
+# instantiate cursor
+cursor = conn.cursor()
+
+# create a script
+myscript = """
+
+create table objects (
+    Country VARCHAR
+    City    VARCHAR
+    latitude    REAL
+    longitude   REAL
+    Inventory_Year  VARCHAR
+    Emissions_Column_Number INTEGER
+    Emissions_Row_Number    INTEGER
+    Emissions_Response_Answer   REAL
+    Emissions_Data_Reported INTEGER
+    Population  INTEGER
+    
+
+);
+
+insert into objects (Country, City, latitude, longitude, Inventory_Year, Emissions_Column_Number, Emissions_Row_Number, Emissions_Response_Answer,Emissions_Data_Reported, Population)
+values
+    ("United States of America","Alameda",122.163,37.4522,"2015",5,31,409039,1,76733),
+    ("United States of America","Albany",-73.7562,42.6526,"2019",5,31,1166127,1,99224),
+    ("United States of America","Ann Arbor",-83.743,42.2808,"2021",5,31,899445,1,121536),
+    ("United States of America","Arlington",-76.0026,37.2265,"2016",5,31,1151808,1,228800),
+    ("United States of America","Asheville",-82.5515,35.5951,"2019/2020",1,4,639298,1,91560),
+    ("United States of America","Atlanta",-84.388,33.749,"2019",5,31,4493117,1,488800),
+    ("United States of America","Austin",-97.7431,30.2672,"2020",5,31,4251294,1,1272018),
+    ("United States of America","Baltimore",-76.6122,39.2904,"2020",5,31,4426093,1,585708),
+    ("United States of America","Bellingham",-122.479,48.7519,"2020",5,31,640873.58,1,90821),
+    ("United States of America","Bloomington",-86.5264,39.1653,"2018",5,31,779249,1,85000),
+    ("United States of America","Boston",-71.0598,42.3584,"2020",5,31,3329934,1,675647),
+    ("United States of America","Boulder",-105.252,40.0274,"2021/2022",5,31,566488,1,108250),
+    ("United States of America","Boulder County",-105.5,40.15,"2016",1,17,4873034,1,322226),
+    ("United States of America","Boynton Beach",-80.216,26.4986,"2017",5,31,1517382,1,0),
+    ("United States of America","Breckenridge",106.038,39.4817,"2020",1,17,187316,1,4947),
+    ("United States of America","Broward",80.3659,26.1901,"2018",1,17,18336198.45,1,1909151),
+    ("United States of America","Cambridge, MA",-71.1057,42.3674,"2019",5,31,812972,1,116632),
+    ("United States of America","Chapel Hill",-79.0558,35.9132,"2017",1,4,594267,1,59234),
+    ("United States of America","Charlotte",-80.8431,35.2271,"2019",5,31,6099.34,1,868000),
+    ("United States of America","Charlottesville",-78.4767,38.0293,"2020",5,31,136030.57,1,46553),
+    ("United States of America","Chicago",-87.6298,41.8781,"2019",5,31,17590000,1,2746388),
+    ("United States of America","Chula Vista",-117.084,32.64,"2020",5,31,581000,1,272202),
+    ("United States of America","Cincinnati",-84.512,39.1031,"2019",5,31,1992537,1,300357),
+    ("United States of America","Cleveland",-81.6944,41.4993,"2020",5,31,6424422.45,1,383331),
+    ("United States of America","Columbia, MO",-92.3341,38.9517,"2021",5,31,1077781,1,123619),
+    ("United States of America","Columbus",-82.9988,39.9612,"2021",5,31,5008843.33,1,913921),
+    ("United States of America","Culver City",-118.4,34.02,"2019",1,4,94956,1,39185),
+    ("United States of America","Cupertino",-122.032,37.323,"2018",5,31,319694.66,1,63228),
+    ("United States of America","Dallas",-96.8004,32.7801,"2015",1,17,20364604,1,1300082),
+    ("United States of America","Davie",-80.2333,26.0625,"2021",1,17,872800,1,106000),
+    ("United States of America","Denton",-97.1331,33.2148,"2019",1,4,947471,1,136195),
+    ("United States of America","Dubuque",-90.5071,42.5006,"2018",5,31,819406,1,58410),
+    ("United States of America","Easton",-75.2207,40.6884,"2018",5,31,168321.11,1,27000),
+    ("United States of America","Emeryville",-122.285,37.8313,"2020",5,31,100377,1,12298),
+    ("United States of America","Fayetteville",-94.1719,36.0821,"2021",1,4,723004,1,93949),
+    ("United States of America","Flagstaff",-111.631,35.1992,"2021",5,31,584154.86,1,76338),
+    ("United States of America","Fort Collins",-105.084,40.5853,"2020/2021",5,31,1396693,1,171264),
+    ("United States of America","Fremont",-121.989,37.5483,"2018",5,31,1043169.13,1,235740),
+    ("United States of America","Hallandale Beach",-80.1484,25.9812,"2021",5,31,371684,1,39901),
+    ("United States of America","Hayward",-122.081,37.6689,"2019",5,31,796898,1,160197),
+    ("United States of America","Honolulu",157.59,21.28,"2020",5,31,8106562,1,1016410),
+    ("United States of America","Houston",-95.3694,29.7602,"2019/2020",5,31,19811166,1,2320268),
+    ("United States of America","Indianapolis",-86.1785,39.7676,"2019",5,31,9054872.26,1,883570),
+    ("United States of America","Iowa City",-91.5302,41.6611,"2021/2022",5,31,787993,1,75849),
+    ("United States of America","Kansas City",-94.573,39.1429,"2019",1,17,9020225,1,486404),
+    ("United States of America","Knoxville",-83.9207,35.9606,"2019",5,31,3136177,1,185291),
+    ("United States of America","La Crosse",-91.2476,43.8166,"2020",5,31,403069,1,52690),
+    ("United States of America","Lake Forest",-87.8406,42.2586,"2019",1,4,366980,1,19173),
+    ("United States of America","Lakewood",-105.081,39.7047,"2018",5,31,827143,1,151411),
+    ("United States of America","Las Vegas",-115.14,36.1699,"2019",5,31,2702879.7,1,651297),
+    ("United States of America","Lexington, MA",-71.2269,42.4443,"2015",5,31,287962,1,32000),
+    ("United States of America","Los Angeles",-118.244,34.0522,"2020",5,31,17828265.47,1,3898747),
+    ("United States of America","Louisville",-85.6784,38.196,"2016",5,31,10844022,1,765352),
+    ("United States of America","Manhattan Beach",-118.405,33.8889,"2020",5,31,204534.67,1,35064),
+    ("United States of America","Medford",-122.876,42.3265,"2020/2021",5,31,316576,1,59662),
+    ("United States of America","Memphis",-90.049,35.1495,"2019",5,31,21688362.84,1,937166),
+    ("United States of America","Miami",-80.1918,25.7617,"2018",1,17,3453572,1,470914),
+    ("United States of America","Miami Beach",-80.13,25.7906,"2019",5,31,729150,1,88885),
+    ("United States of America","Milwaukee",-87.9065,43.0389,"2018",5,31,4894554,1,592025),
+    ("United States of America","Minneapolis",-93.2667,44.9833,"2020",5,31,2520252.27,1,436000),
+    ("United States of America","Nashville",-86.7816,36.1627,"2019",5,31,7222757.43,1,694144),
+    ("United States of America","New Bedford",-70.9342,41.6362,"2017",5,31,575898,1,95125),
+    ("United States of America","New Orleans",-90.0715,29.9511,"2017",5,31,2099632,1,391493),
+    ("United States of America","New York City",-74.0059,40.7128,"2020",5,31,34337655,1,8804190),
+    ("United States of America","Oakland",-122.271,37.8044,"2019",5,31,3571028.17,1,433044),
+    ("United States of America","Orlando",-81.3792,28.5383,"2018",5,31,3724182,1,280258),
+    ("United States of America","Palo Alto",-122.143,37.4419,"2020",5,31,378976,1,67973),
+    ("United States of America","Park City",-111.498,40.6461,"2016",5,31,207142,1,8299),
+    ("United States of America","Philadelphia",-75.1638,39.9523,"2019",5,31,11134412,1,1584064),
+    ("United States of America","Phoenix",-112.074,33.4484,"2020",5,31,8475897,1,1654675),
+    ("United States of America","Piedmont",-122.232,37.8244,"2020",5,31,31609,1,11000),
+    ("United States of America","Pittsburgh",-79.9959,40.4406,"2020/2021",5,31,5010418,1,292537),
+    ("United States of America","Plano",-96.6989,33.0198,"2017",1,4,1839391,1,285312),
+    ("United States of America","Portland",-70.2553,43.6615,"2017",5,31,560741,1,66715),
+    ("United States of America","Portland, OR",-122.682,45.52,"2020",5,31,4903925.15,1,829560),
+    ("United States of America","Providence",-71.4128,41.824,"2018",5,31,45495718,1,179435),
+    ("United States of America","Reno",-119.814,39.5296,"2020",5,31,887000,1,264165),
+    ("United States of America","Roanoke",-79.9414,37.271,"2019",5,31,1125805.32,1,99229),
+    ("United States of America","Rochester",-77.6109,43.161,"2010",5,31,2266963,1,210563),
+    ("United States of America","Sacramento",-121.494,38.5816,"2016",1,4,2616510,1,472692),
+    ("United States of America","Saint Paul",-93.09,44.9537,"2020",5,31,1528564.63,1,305887),
+    ("United States of America","Salem",-70.8967,42.5195,"2021",5,31,666519751,1,43088),
+    ("United States of America","San Antonio",-98.4936,29.4241,"2019",5,31,37708943.79,1,1451853),
+    ("United States of America","San Diego",-117.163,32.7175,"2019/2020",5,31,5570223,1,1400000),
+    ("United States of America","San Francisco",-122.419,37.7749,"2019",5,31,3761907,1,881549),
+    ("United States of America","San JosÃ©, CA",-121.886,37.3382,"2019",5,31,4527608,1,1047871),
+    ("United States of America","Santa Cruz, CA",-122.031,36.9741,"2019",5,31,274859,1,65041),
+    ("United States of America","Santa Monica",-118.481,34.0219,"2020",5,31,469756.7,1,91105),
+    ("United States of America","Savannah",-81.0998,32.0835,"2016",5,31,2063648,1,144352),
+    ("United States of America","Seattle",-122.332,47.6062,"2018",5,31,4436509,1,744955),
+    ("United States of America","Somerville",-71.0826,42.3934,"2018",5,31,485574,1,81357),
+    ("United States of America","South Bend",41.6754,-86.2532,"2021",5,31,875973.55,1,103453),
+    ("United States of America","Tacoma",-122.444,47.2529,"2019",5,31,519130,1,216304),
+    ("United States of America","Takoma Park",-77.0075,38.9779,"2020",5,31,64229,1,17703),
+    ("United States of America","Tempe",-111.94,33.4255,"2020",5,31,1440032.27,1,180587),
+    ("United States of America","Vail",-106.374,39.6403,"2018",1,4,191750,1,5450),
+    ("United States of America","Washington, DC",-77.0369,38.9072,"2020",5,31,2931683,1,690093),
+    ("United States of America","West Palm Beach",-80.0534,26.7153,"2018",5,31,783518,1,111398),
+    ("United States of America","Winston-Salem",-80.2442,36.0999,"2019",1,17,3410639.44,1,247951);
+
+    
+"""
+
+# execute the query
+cursor.executescript(myscript)
+
+# commit
+conn.commit()
+
+# close
+conn.close()
+
+# create a home route
+# @ > python decorator
+@app.route("/")
+
+# creating a function for our home route
+#def hello_world():
+    #return render_template('index.html', mylist=mylist)
+
+# create another route
+@app.route("/objectsroute")
+
+# creating a function for our home route
+def objectsroute():
+
+    #create emission
+    conn = sqlite3.connect('emission.sqlite')
+
+    # instantiate cursor
+    cursor = conn.cursor()
+
+    # select *
+    cursor.execute("select * from objects")
+
+    # grab all the data
+    my_obj_data = cursor.fetchall()
+
+    # close
+    conn.close()
+
+    return render_template('objectsroute.html', records=my_obj_data)
+
+
+# running it from a script
+if __name__ == '__main__':
+
+    # run our app
+    app.run(debug=True)

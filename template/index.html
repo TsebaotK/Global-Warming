@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="jSrePgd8NZpwepWOmHXskDRX0fgjGXUqixdPH26z">
+  <title> Global Warming </title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="../style.css">
+
+  <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <![endif]-->
+
+
+</head>
+
+
+<body>
+  <center>
+    <h1> Global Warming Effects in the USA </h1>
+
+    <div class="container">
+      <div id="FossilFuels"> Fossil Fuel Map </div>
+    </div>
+
+  </center>
+
+
+  <div class="container">
+    <div class="row" id="ChartandGraph" size="1000px">
+      Pie Chart
+      <div id="Charts" class="col-md-6">
+      </div>
+
+      <div id="Graphs" class="col-md-6"> Graph
+      </div>
+    </div>
+  </div>
+
+  <center>
+    <div class="container">
+      <div id="USATemperatures"> Temperature Heat Map </div>
+    </div>
+  </center>
+
+  <center>
+  <div class="container" id="plot"></div>
+  </center>
+
+  <!-- JavaScript file -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script type="text/javascript" src="../emissionplot.js"></script>
+
+</body>
+
+</html>
