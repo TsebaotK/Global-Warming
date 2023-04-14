@@ -1,0 +1,123 @@
+
+  <!DOCTYPE html>
+  <html lang="en-GB">
+  
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="csrf-token" content="jSrePgd8NZpwepWOmHXskDRX0fgjGXUqixdPH26z">
+      <title> Global Warming  </title>
+      
+      <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Load d3 library -->
+
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+       
+      <!-- JavaScript and plotly file -->
+    <!-- The div where we'll insert our map -->
+    
+    
+    <!-- <script type="text/javascript" src="logic.js"></script> -->
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+
+     <!-- Leaflet JavaScript code -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+    <!-- style sheet -->
+      <link rel="stylesheet" href="/static/css/style.css">
+
+      <!-- map Javascript code -->
+      <script type="text/javascript" src="/static/js/map.js"></script>
+
+      <!-- T's map code -->
+        <script type="text/javascript" src="/static/js/emissionplot.js"></script>      
+     <!-- noor's map code -->
+        <script type="text/javascript" src="/static/js/logic.js"></script>  
+
+  
+  </head>
+
+
+  <body> <center>
+  <h1> Global Warming Effects in the USA </h1>
+
+      <div class="container">
+        <div id="FossilFuels"> </div>
+      </div>
+  
+    </center>  
+  
+<center>
+    <div class="container"> 
+        <div class = "row" id="ChartandGraph">
+            <div id="Charts"> US Cities Emission Pie Chart
+ 
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+</center>
+
+
+<!-- <center>
+    <div class="container"> 
+        <div class = "line" id="temps" style="width: 800; height: 600px;">
+            <div id="LineGraph"> Average USA Temperatures (2000-2021)  
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+</center> -->
+<center>
+<div> 
+    <div class = "row" id="Plot"> 
+        <div id = "LineGraph" style="height: 600px; width: 800px;""> Average USA Temperatures (2000-2021)  
+            
+            <script>
+                PLOT = document.getElementById('LineGraph');
+                Plotly.newPlot( PLOT, [{
+                    x: [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021],
+                    y: [0.992, 0.78, 0.946, 0.987, 0.86, 1.149, 1.023, 1.141, 0.21, 0.396, 0.69, 0.534, 1.445, 0.613, 0.5, 1.525, 2.219, 1.43, 1.273,1.032, 1.325, 1.166,],
+                    type: 'scatter' }], {
+                margin: { t: 0 } } );
+            </script>
+        </div>    
+    </div>
+</div> 
+</center>
+
+<br>
+
+<center>
+<div class="container">
+    <div class = "row" id="map">
+    <!-- <div id="USATemperatures"> Temperature Heat Map </div> -->
+    <div id="map"></div>
+    <div class="info"></div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    </div>
+</div>
+</center>
+
+<a href=“index1.html”></a>
+
+ </body>
+
+
+
+
+
+ </html>
+                             
+
